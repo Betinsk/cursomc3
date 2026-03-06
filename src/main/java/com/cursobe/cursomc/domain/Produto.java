@@ -2,8 +2,10 @@ package com.cursobe.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -34,6 +36,8 @@ public class Produto implements Serializable{
 			)
 	private List<Categoria> categorias = new ArrayList<>();
 	
+	private Set<ItemPedido> items = new HashSet<>();
+	
 	Produto(){
 	}
 
@@ -42,6 +46,15 @@ public class Produto implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+	}
+	
+	public List<Pedido> getPedidos(){
+		List<Pedido> list = new ArrayList<>();
+		for(ItemPedido x : items) {
+			list.add(x.getPedido());
+		}
+		
+		return list;
 	}
 
 	public Integer getId() {
@@ -75,6 +88,14 @@ public class Produto implements Serializable{
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
+	
+	public Set<ItemPedido> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<ItemPedido> items) {
+		this.items = items;
+	}
 
 	@Override
 	public int hashCode() {
@@ -92,6 +113,7 @@ public class Produto implements Serializable{
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
 	
 	
